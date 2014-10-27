@@ -1,0 +1,34 @@
+language: NSC
+source-url: http://msdn.microsoft.com/en-us/library/cc236198.aspx
+standard-version: unknown
+ABNF: |
+  nscfile = "[Address]" CRLF address-section "[Formats]" CRLF 
+  formats-section
+  address-section = optional-properties1 ip-address ip-port 
+  optional-properties2
+  ip-address = "IP Address" string-param 
+  ip-port = "IP Port" integer-param
+  formats-section = 1*( format [ description ] )
+  format = "Format" 1*DIGIT *WSP "=" *WSP binary CRLF
+  description = "Description" 1*DIGIT string-param
+  optional-properties1 = [ name-prop ] [ version ] [ mcadapter ]
+  name-prop = "Name" string-param
+  version = "NSC Format Version" *WSP "=" *WSP "3.0" CRLF
+  mcadapter = "Multicast Adapter" string-param
+  optional-properties2 = [ ttl ] [ ecc ] [ logurl ] [ rollover ]
+   [ split ] [ cache ] [ expire ] [ nbt ]
+  ttl = "Time To Live" integer-param
+  ecc = "Default Ecc" integer-param 
+  logurl = "Log URL" string-param
+  rollover = "Unicast URL" string-param
+  split = "Allow Splitting" integer-param
+  cache = "Allow Caching" integer-param
+  expire = "Cache Expiration Time" integer-param
+  nbt = "Network Buffer Time" integer-param
+  string-param = *WSP "=" *WSP string CRLF
+  integer-param = *WSP "=" *WSP integer CRLF
+  integer = "0x" 8HEXDIG
+  string = ( *VCHAR ) / binary
+  binary = "02" encoded-block
+  encoded-block = 12*encoded-char
+  encoded-char = ALPHA / DIGIT / "{" / "}"
